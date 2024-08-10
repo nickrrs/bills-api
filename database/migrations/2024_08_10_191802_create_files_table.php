@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subcategories', function (Blueprint $table) {
+        Schema::create('files', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('title');
-            $table->string('color');
-            $table->foreignUuid('categorie_id')->constrained('categories')->cascadeOnDelete();
+            $table->uuidMorphs('fileable');
+            $table->string('name');
+            $table->string('path');
+            $table->unsignedBigInteger('size');
+            $table->string('mime_type');
+            $table->string('extension', 10);
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subcategories');
+        Schema::dropIfExists('files');
     }
 };

@@ -11,11 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subcategories', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('title');
-            $table->string('color');
+            $table->uuidMorphs('source');
+            $table->string('transaction_type');
+            $table->string('release_type');
             $table->foreignUuid('categorie_id')->constrained('categories')->cascadeOnDelete();
+            $table->foreignUuid('subcategorie_id')->constrained('subcategories')->cascadeOnDelete();
+            $table->decimal('value');
+            $table->boolean('hasPaid')->default(false);
+            $table->boolean('hasReceived')->default(false);
+            $table->timestamp('transaction_date');
             $table->timestamps();
         });
     }
@@ -25,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subcategories');
+        Schema::dropIfExists('transactions');
     }
 };

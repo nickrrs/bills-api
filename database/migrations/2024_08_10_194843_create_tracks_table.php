@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subcategories', function (Blueprint $table) {
+        Schema::create('tracks', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('title');
-            $table->string('color');
-            $table->foreignUuid('categorie_id')->constrained('categories')->cascadeOnDelete();
+            $table->string('track_type');
+            $table->decimal('actual_value');
+            $table->decimal('goal_value');
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subcategories');
+        Schema::dropIfExists('tracks');
     }
 };
