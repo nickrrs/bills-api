@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('tracks', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('account_id')->constrained('accounts')->cascadeOnDelete();
             $table->string('title');
             $table->string('track_type');
             $table->decimal('actual_value');
