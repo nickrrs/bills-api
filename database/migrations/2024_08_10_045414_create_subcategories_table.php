@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('subcategories', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
+            $table->string('title');
             $table->string('color');
             $table->foreignUuid('categorie_id')->constrained('categories')->cascadeOnDelete();
             $table->timestamps();
