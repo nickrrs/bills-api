@@ -7,21 +7,30 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Subcategorie extends Model
+class Category extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $table = 'subcategories';
+    protected $table = 'categories';
 
     protected $fillable = [
         'id',
         'title',
         'color',
-        'categorie_id',
     ];
 
-    public function categories(): HasMany
+    public function subcategories(): HasMany
     {
-        return $this->hasMany(Categorie::class);
+        return $this->hasMany(Subcategory::class);
+    }
+
+    public function limits(): HasMany
+    {
+        return $this->hasMany(Limit::class);
+    }
+
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Limit::class);
     }
 }
