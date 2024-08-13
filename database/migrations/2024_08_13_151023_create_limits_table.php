@@ -15,7 +15,6 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('account_id')->constrained('accounts')->cascadeOnDelete();
             $table->foreignUuid('category_id')->constrained('categories')->cascadeOnDelete();
-            $table->foreignUuid('subcategory_id')->constrained('subcategories')->cascadeOnDelete();
             $table->string('title');
             $table->decimal('actual_value')->default(0);
             $table->decimal('limit_value');

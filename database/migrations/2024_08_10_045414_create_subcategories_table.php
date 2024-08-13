@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('title');
             $table->string('color');
-            $table->foreignUuid('categorie_id')->constrained('categories')->cascadeOnDelete();
+            $table->foreignUuid('category_id')->constrained('categories')->cascadeOnDelete();
             $table->timestamps();
         });
     }

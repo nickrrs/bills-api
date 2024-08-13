@@ -17,8 +17,8 @@ return new class extends Migration
             $table->uuidMorphs('source');
             $table->string('transaction_type');
             $table->string('release_type');
-            $table->foreignUuid('categorie_id')->constrained('categories')->cascadeOnDelete();
-            $table->foreignUuid('subcategorie_id')->constrained('subcategories')->cascadeOnDelete();
+            $table->foreignUuid('category_id')->nullable()->constrained('categories')->cascadeOnDelete();
+            $table->foreignUuid('subcategory_id')->nullable()->constrained('subcategories')->cascadeOnDelete();
             $table->decimal('value');
             $table->boolean('hasPaid')->default(false);
             $table->boolean('hasReceived')->default(false);
