@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tracks', function (Blueprint $table) {
+        Schema::create('limits', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('account_id')->constrained('accounts')->cascadeOnDelete();
+            $table->foreignUuid('category_id')->constrained('categories')->cascadeOnDelete();
+            $table->foreignUuid('subcategory_id')->constrained('subcategories')->cascadeOnDelete();
             $table->string('title');
-            $table->string('track_type');
-            $table->decimal('actual_value');
-            $table->decimal('goal_value');
+            $table->decimal('actual_value')->default(0);
+            $table->decimal('limit_value');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tracks');
+        Schema::dropIfExists('limits');
     }
 };
