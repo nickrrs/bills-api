@@ -7,19 +7,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Track extends Model
+class Goal extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $table = 'tracks';
+    protected $table = 'goals';
 
-    protected $fillable = [
+    protected $fillabe = [
         'id',
         'account_id',
         'title',
-        'track_type',
-        'actual_value',
+        'goal_color',
+        'description',
+        'status',
+        'initial_value',
         'goal_value',
+        'goal_conclusion_date'
     ];
 
     public function account(): BelongsTo
