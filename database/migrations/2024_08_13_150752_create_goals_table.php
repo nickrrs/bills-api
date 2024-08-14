@@ -11,11 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subcategories', function (Blueprint $table) {
+        Schema::create('goals', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('account_id')->constrained('accounts')->cascadeOnDelete();
             $table->string('title');
-            $table->string('color');
-            $table->foreignUuid('category_id')->constrained('categories')->cascadeOnDelete();
+            $table->string('goal_color');
+            $table->text('description')->nullable();
+            $table->string('status');
+            $table->decimal('initial_value');
+            $table->decimal('goal_value');
+            $table->timestamp('goal_conclusion_date');
             $table->timestamps();
         });
     }
@@ -25,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subcategories');
+        Schema::dropIfExists('goals');
     }
 };

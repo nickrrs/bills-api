@@ -30,8 +30,13 @@ class Account extends Model
         return $this->hasMany(Card::class);
     }
 
-    public function tracks(): HasMany
+    public function limits(): HasMany
     {
-        return $this->hasMany(Track::class);
+        return $this->hasMany(Limit::class);
+    }
+
+    public function goals(): HasMany
+    {
+        return $this->hasMany(Goal::class);
     }
 }

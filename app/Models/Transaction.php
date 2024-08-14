@@ -20,8 +20,8 @@ class Transaction extends Model
         'source_id',
         'transaction_type',
         'release_type',
-        'categorie_id',
-        'subcategorie_id',
+        'category_id',
+        'subcategory_id',
         'value',
         'hasPaid',
         'hasReceived',
@@ -36,14 +36,14 @@ class Transaction extends Model
         ];
     }
 
-    public function categorie(): BelongsTo
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(Categorie::class);
+        return $this->belongsTo(Category::class);
     }
 
-    public function subcategorie(): BelongsTo
+    public function subcategory(): BelongsTo
     {
-        return $this->belongsTo(Categorie::class);
+        return $this->belongsTo(Subcategory::class);
     }
 
     public function source(): MorphTo
