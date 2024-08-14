@@ -22,7 +22,7 @@ class Goal extends Model
         'status',
         'initial_value',
         'goal_value',
-        'goal_conclusion_date'
+        'goal_conclusion_date',
     ];
 
     public function account(): BelongsTo

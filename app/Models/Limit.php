@@ -18,7 +18,7 @@ class Limit extends Model
         'category_id',
         'title',
         'actual_value',
-        'limit_value'
+        'limit_value',
     ];
 
     public function account(): BelongsTo
