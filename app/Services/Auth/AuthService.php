@@ -2,15 +2,16 @@
 
 namespace App\Services\Auth;
 
-use App\Actions\Auth\NewUserAction;
 use App\Http\DTO\Auth\LoginDTO;
 use App\Http\DTO\Auth\RegisterDTO;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthService
 {
-    public function newUser(RegisterDTO $registerDTO): User {
+    public function newUser(RegisterDTO $registerDTO): User
+    {
         return User::create([
             'first_name' => $registerDTO->first_name,
             'last_name' => $registerDTO->last_name,
@@ -19,9 +20,15 @@ class AuthService
         ]);
     }
 
-    public function signIn(LoginDTO $loginDTO): string {
+    public function signIn(LoginDTO $loginDTO): string
+    {
         $user = User::where('email', $loginDTO->email)->first();
 
-        return $user->createToken($user->first_name . '-AuthToken')->plainTextToken;
+        return $user->createToken(Hash::make($user->first_name).'-AuthToken', ['*'], now()->addWeek())->plainTextToken;
+    }
+
+    public function revokeToken(PersonalAccessToken $token): bool
+    {
+        return $token->delete();
     }
 }
