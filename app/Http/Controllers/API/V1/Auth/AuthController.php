@@ -1,19 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\API\V1;
+namespace App\Http\Controllers\API\V1\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\DTO\Auth\LoginDTO;
-use App\Http\DTO\Auth\RegisterDTO;
-use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegisterRequest;
+use App\Http\DTO\Auth\{LoginDTO, RegisterDTO};
+use App\Http\Requests\{LoginRequest, RegisterRequest};
 use App\Http\Resources\UserResource;
 use App\Services\Auth\AuthService;
 use App\Traits\ExceptionHandler;
 use Exception;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Http\{JsonResponse, Request};
+use Illuminate\Support\Facades\{Auth, Log};
 
 class AuthController extends Controller
 {
@@ -27,7 +24,7 @@ class AuthController extends Controller
     public function register(RegisterRequest $registerRequest, AuthService $authService): UserResource|JsonResponse
     {
         try {
-            $registerDTO = new RegisterDTO($registerRequest->validated());
+            $registerDTO    = new RegisterDTO($registerRequest->validated());
             $registeredUser = $authService->newUser($registerDTO);
 
             return new UserResource($registeredUser);
@@ -41,12 +38,19 @@ class AuthController extends Controller
     public function login(LoginRequest $loginRequest, AuthService $authService): JsonResponse
     {
         try {
+
+            if (!Auth::attempt($loginRequest->validated())) {
+                return response()->json([
+                    'message' => 'Wrong credentials.',
+                ], 401);
+            }
+
             $loginDTO = new LoginDTO($loginRequest->validated());
-            $token = $authService->signIn($loginDTO);
+            $token    = $authService->signIn($loginDTO);
 
             return response()->json([
                 'access_token' => $token,
-                'token_type' => 'Bearer',
+                'token_type'   => 'Bearer',
             ], 200);
         } catch (Exception $exception) {
             Log::error('Error while trying to sign in: ', ['error' => $exception->getMessage(), 'status' => $exception->getCode()]);
@@ -58,9 +62,9 @@ class AuthController extends Controller
     public function logout(Request $request, AuthService $authService): JsonResponse
     {
         try {
-            $tokenRevoked = $authService->revokeToken($request->user()->currentAccessToken());
+            $tokenRevoked = $authService->revokeToken($request->user());
 
-            if ($tokenRevoked == false || $tokenRevoked == null) {
+            if ($tokenRevoked == false) {
                 return response()->json([
                     'error' => [
                         'message' => 'Error while trying to handle your authenticated token, please try again!',

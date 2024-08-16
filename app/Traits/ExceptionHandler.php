@@ -12,25 +12,25 @@ trait ExceptionHandler
 {
     private function handleException(\Exception $exception): JsonResponse
     {
-        ['code' => $code, 'message' => $message] = match (true) {
+        ['code'                                 => $code, 'message' => $message] = match (true) {
             $exception instanceof HttpException => [
-                'code' => $exception->getStatusCode(),
+                'code'    => $exception->getStatusCode(),
                 'message' => $exception->getMessage(),
             ],
             $exception instanceof QueryException => [
-                'code' => 500,
+                'code'    => 500,
                 'message' => $exception->getMessage() ?: 'A query exception has occurred.',
             ],
             $exception instanceof ValidationException => [
-                'code' => 422,
+                'code'    => 422,
                 'message' => $exception->getMessage() ?: 'A validation exception has occurred.',
             ],
             $exception instanceof ModelNotFoundException => [
-                'code' => 404,
+                'code'    => 404,
                 'message' => $exception->getMessage() ?: 'A given model was not found.',
             ],
             default => [
-                'code' => 500,
+                'code'    => 500,
                 'message' => $exception->getMessage(),
             ]
         };

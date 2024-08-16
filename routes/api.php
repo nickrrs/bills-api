@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\API\V1\AuthController;
+use App\Http\Controllers\API\V1\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'v1'], function () {
@@ -11,8 +11,8 @@ Route::group(['prefix' => 'v1'], function () {
 
         //Protected Routes
         Route::group(['middleware' => 'auth:sanctum'], function () {
-            Route::get('user', [AuthController::class, 'user'])->name('auth.me');
-            Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout');
+            Route::get('user', [AuthController::class, 'user'])->name('v1.auth.me');
+            Route::post('logout', [AuthController::class, 'logout'])->name('v1.auth.logout');
         });
     });
 });

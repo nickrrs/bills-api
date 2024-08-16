@@ -13,7 +13,10 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, HasUuids, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use HasUuids;
+    use Notifiable;
 
     protected $fillable = [
         'id',
@@ -32,7 +35,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password'          => 'hashed',
         ];
     }
 
