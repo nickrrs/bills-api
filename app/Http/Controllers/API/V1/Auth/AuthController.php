@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API\V1\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\DTO\Auth\{LoginDTO, RegisterDTO};
-use App\Http\Requests\{LoginRequest, RegisterRequest};
+use App\Http\Requests\Auth\{LoginRequest, RegisterRequest};
 use App\Http\Resources\UserResource;
 use App\Services\Auth\AuthService;
 use App\Traits\ExceptionHandler;
@@ -16,16 +16,20 @@ class AuthController extends Controller
 {
     use ExceptionHandler;
 
+    public function __construct(private AuthService $authService)
+    {
+    }
+
     public function user(Request $request): UserResource
     {
         return new UserResource($request->user());
     }
 
-    public function register(RegisterRequest $registerRequest, AuthService $authService): UserResource|JsonResponse
+    public function register(RegisterRequest $registerRequest): UserResource|JsonResponse
     {
         try {
             $registerDTO    = new RegisterDTO($registerRequest->validated());
-            $registeredUser = $authService->newUser($registerDTO);
+            $registeredUser = $this->authService->newUser($registerDTO);
 
             return new UserResource($registeredUser);
         } catch (Exception $exception) {
@@ -35,7 +39,7 @@ class AuthController extends Controller
         }
     }
 
-    public function login(LoginRequest $loginRequest, AuthService $authService): JsonResponse
+    public function login(LoginRequest $loginRequest): JsonResponse
     {
         try {
 
@@ -46,7 +50,7 @@ class AuthController extends Controller
             }
 
             $loginDTO = new LoginDTO($loginRequest->validated());
-            $token    = $authService->signIn($loginDTO);
+            $token    = $this->authService->signIn($loginDTO);
 
             return response()->json([
                 'access_token' => $token,
@@ -59,10 +63,10 @@ class AuthController extends Controller
         }
     }
 
-    public function logout(Request $request, AuthService $authService): JsonResponse
+    public function logout(Request $request): JsonResponse
     {
         try {
-            $tokenRevoked = $authService->revokeToken($request->user());
+            $tokenRevoked = $this->authService->revokeToken($request->user());
 
             if ($tokenRevoked == false) {
                 return response()->json([
