@@ -62,7 +62,7 @@ class AuthController extends Controller
     public function logout(Request $request, AuthService $authService): JsonResponse
     {
         try {
-            $tokenRevoked = $authService->revokeToken($request->user()->currentAccessToken());
+            $tokenRevoked = $authService->revokeToken($request->user());
 
             if ($tokenRevoked == false) {
                 return response()->json([
