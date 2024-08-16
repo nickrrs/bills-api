@@ -5,7 +5,6 @@ namespace App\Services\Auth;
 use App\Http\DTO\Auth\{LoginDTO, RegisterDTO};
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthService
 {
