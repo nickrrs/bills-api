@@ -15,6 +15,7 @@ return new class () extends Migration {
             $table->foreignUuid('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('title');
             $table->decimal('balance');
+            $table->boolean('active')->default(false);
             $table->timestamps();
         });
     }
