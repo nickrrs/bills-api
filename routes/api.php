@@ -18,6 +18,6 @@ Route::group(['prefix' => 'v1'], function () {
     });
 
     Route::group(['middleware' => 'auth:sanctum'], function () {
-        Route::resource('categories', CategoryController::class)->only(['store', 'update']);
+        Route::resource('categories', CategoryController::class)->only(['store', 'update', 'destroy']);
     });
 });

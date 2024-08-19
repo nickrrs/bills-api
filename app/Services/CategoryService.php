@@ -18,4 +18,9 @@ class CategoryService
 
         return $category;
     }
+
+    public function destroy(Category $category): bool
+    {
+        return $category->delete();
+    }
 }

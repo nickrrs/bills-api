@@ -4,8 +4,7 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\DTO\Category\{CategoryDTO, UpdateCategoryDTO};
-use App\Http\Requests\Category\StoreCategoryRequest;
-use App\Http\Requests\Category\UpdateCategoryRequest;
+use App\Http\Requests\Category\{StoreCategoryRequest, UpdateCategoryRequest};
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Services\CategoryService;
@@ -36,15 +35,40 @@ class CategoryController extends Controller
         }
     }
 
-    public function update(UpdateCategoryRequest $updateCategoryRequest, Category $category)
+    public function update(UpdateCategoryRequest $updateCategoryRequest, Category $category): CategoryResource | JsonResponse
     {
         try {
-            $categoryDTO = new UpdateCategoryDTO($updateCategoryRequest->validated());
-            $category    = $this->categoryService->update($categoryDTO, $category);
+            $categoryDTO     = new UpdateCategoryDTO($updateCategoryRequest->validated());
+            $updatedCategory = $this->categoryService->update($categoryDTO, $category);
 
-            return new CategoryResource($category);
+            return new CategoryResource($updatedCategory);
         } catch (Exception $exception) {
             Log::error('Error while updating category: ', ['error' => $exception->getMessage(), 'status' => $exception->getCode()]);
+
+            return $this->handleException($exception);
+        }
+    }
+
+    public function destroy(Category $category): JsonResponse
+    {
+        try {
+            $deleted = $this->categoryService->destroy($category);
+
+            if(!$deleted) {
+                return response()->json([
+                    'error' => [
+                        'message' => 'Error while trying deleting the category, please try again.',
+                    ],
+                ], 409);
+            }
+
+            return response()->json([
+                'success' => [
+                    'message' => 'Category deleted.',
+                ],
+            ]);
+        } catch (Exception $exception) {
+            Log::error('Error while deletinng category: ', ['error' => $exception->getMessage(), 'status' => $exception->getCode()]);
 
             return $this->handleException($exception);
         }

@@ -45,7 +45,9 @@ class AuthController extends Controller
 
             if (!Auth::attempt($loginRequest->validated())) {
                 return response()->json([
-                    'message' => 'Wrong credentials.',
+                    'error' => [
+                        'message' => 'Wrong credentials.',
+                    ],
                 ], 401);
             }
 
