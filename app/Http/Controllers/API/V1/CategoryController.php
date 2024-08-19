@@ -10,7 +10,8 @@ use App\Models\Category;
 use App\Services\CategoryService;
 use App\Traits\ExceptionHandler;
 use Exception;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\{JsonResponse, Request};
 use Illuminate\Support\Facades\Log;
 
 class CategoryController extends Controller
@@ -21,11 +22,47 @@ class CategoryController extends Controller
     {
     }
 
+    public function index(Request $request): ResourceCollection | JsonResponse
+    {
+        try {
+            $categories = $this->categoryService->index($request->user()->activeAccount());
+
+            return CategoryResource::collection($categories);
+        } catch (Exception $exception) {
+            Log::error('Error while index category: ', ['error' => $exception->getMessage(), 'status' => $exception->getCode()]);
+
+            return $this->handleException($exception);
+        }
+    }
+
+    public function show(Category $category): CategoryResource | JsonResponse
+    {
+        try {
+            return new CategoryResource($category);
+        } catch (Exception $exception) {
+            Log::error('Error while index category: ', ['error' => $exception->getMessage(), 'status' => $exception->getCode()]);
+
+            return $this->handleException($exception);
+        }
+    }
+
     public function store(StoreCategoryRequest $storeCategoryRequest): CategoryResource | JsonResponse
     {
         try {
+            $activeAccount = $storeCategoryRequest->user()->activeAccount();
+
+            if(!filled($activeAccount)) {
+                return response()->json([
+                    'error' => [
+                        'message' => 'Please select an account before creating a category.',
+                    ],
+                ]);
+            }
+
             $categoryDTO = new CategoryDTO($storeCategoryRequest->validated());
-            $category    = $this->categoryService->store($categoryDTO);
+            $categoryDTO->account_id = $activeAccount->id;
+
+            $category = $this->categoryService->store($categoryDTO);
 
             return new CategoryResource($category);
         } catch (Exception $exception) {

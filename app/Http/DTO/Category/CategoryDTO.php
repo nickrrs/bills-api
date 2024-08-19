@@ -14,6 +14,6 @@ class CategoryDTO
     {
         $this->title      = $data['title'];
         $this->color      = $data['color'];
-        $this->account_id = $data['account_id'];
+        $this->account_id = "";
     }
 }

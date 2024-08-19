@@ -12,9 +12,8 @@ class StoreCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'      => ['required', 'string'],
-            'color'      => ['required', 'string'],
-            'account_id' => ['required', 'string', 'exists:accounts,id'],
+            'title' => ['required', 'string'],
+            'color' => ['required', 'string'],
         ];
     }
 

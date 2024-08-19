@@ -13,6 +13,7 @@ class UserObserver
             'user_id' => $user->getKey(),
             'title'   => 'My account',
             'balance' => 0,
+            'active'  => true,
         ]);
     }
 }
