@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Category;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\{ValidationException};
 
-class LoginRequest extends FormRequest
+class StoreCategoryRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-            'email'    => 'required|string|email',
-            'password' => 'required|min:8',
+            'title' => ['required', 'string'],
+            'color' => ['required', 'string'],
         ];
     }
 

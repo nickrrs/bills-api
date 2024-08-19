@@ -12,6 +12,7 @@ return new class () extends Migration {
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('account_id')->constrained('accounts')->cascadeOnDelete();
             $table->string('title');
             $table->string('color');
             $table->timestamps();
