@@ -16,8 +16,10 @@ class Account extends Model
 
     protected $fillable = [
         'id',
+        'title',
         'user_id',
         'balance',
+        'active',
     ];
 
     public function user(): BelongsTo
@@ -38,5 +40,10 @@ class Account extends Model
     public function goals(): HasMany
     {
         return $this->hasMany(Goal::class);
+    }
+
+    public function categories(): HasMany
+    {
+        return $this->hasMany(Category::class);
     }
 }

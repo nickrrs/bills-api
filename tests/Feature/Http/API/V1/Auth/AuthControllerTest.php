@@ -2,6 +2,7 @@
 
 use App\Models\{User};
 use Illuminate\Support\Facades\Hash;
+
 use function Pest\Laravel\{actingAs, post};
 
 it('required values to register as an user', function ($field, $value) {
