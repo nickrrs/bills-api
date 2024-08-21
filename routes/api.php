@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\V1\Auth\AuthController;
-use App\Http\Controllers\API\V1\CategoryController;
+use App\Http\Controllers\API\V1\{CategoryController, SubCategoryController};
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'v1'], function () {
@@ -19,5 +19,6 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::resource('categories', CategoryController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
+        Route::resource('categories.subcategories', SubCategoryController::class)->only('index', 'show', 'store', 'update', 'destroy');
     });
 });
