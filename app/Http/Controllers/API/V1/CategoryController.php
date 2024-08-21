@@ -59,7 +59,7 @@ class CategoryController extends Controller
                 ]);
             }
 
-            $categoryDTO = new CategoryDTO($storeCategoryRequest->validated());
+            $categoryDTO             = new CategoryDTO($storeCategoryRequest->validated());
             $categoryDTO->account_id = $activeAccount->id;
 
             $category = $this->categoryService->store($categoryDTO);
@@ -75,7 +75,14 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $updateCategoryRequest, Category $category): CategoryResource | JsonResponse
     {
         try {
-            $categoryDTO     = new UpdateCategoryDTO($updateCategoryRequest->validated());
+            $categoryDTO = new UpdateCategoryDTO(
+                $updateCategoryRequest->validated(),
+                [
+                    'title' => $category->title,
+                    'color' => $category->color,
+                ]
+            );
+
             $updatedCategory = $this->categoryService->update($categoryDTO, $category);
 
             return new CategoryResource($updatedCategory);
