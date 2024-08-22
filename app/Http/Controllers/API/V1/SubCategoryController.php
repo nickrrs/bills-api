@@ -66,11 +66,7 @@ class SubCategoryController
         try {
             $subCategoryDTO = new UpdateSubCategoryDTO(
                 $updateSubCategoryRequest->validated(),
-                [
-                    'title'       => $subcategory->title,
-                    'color'       => $subcategory->color,
-                    'category_id' => $subcategory->category_id,
-                ]
+                $subcategory->toArray()
             );
 
             $updatedSubCategory = $this->subCategoryService->update($subCategoryDTO, $subcategory);

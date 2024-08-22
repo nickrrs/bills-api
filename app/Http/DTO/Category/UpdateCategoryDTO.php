@@ -1,16 +1,19 @@
 <?php
 
 namespace App\Http\DTO\Category;
+use App\Traits\FillableFromArray;
+use ReflectionClass;
 
 class UpdateCategoryDTO
 {
+    use FillableFromArray;
+
     public $title;
 
     public $color;
 
     public function __construct(array $data, $existingData = [])
     {
-        $this->title = $data['title'] ?? $existingData['title'];
-        $this->color = $data['color'] ?? $existingData['color'];
+        $this->fillFromArray($data, $existingData);
     }
 }
