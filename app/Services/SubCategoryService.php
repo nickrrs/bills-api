@@ -10,7 +10,7 @@ class SubCategoryService
     public function index(Category $category, Account $account)
     {
         return Subcategory::query()
-            ->where('category_id', $category->id)
+            ->with(['category'])
             ->whereHas('category', function ($query) use ($account) {
                 $query->where('account_id', $account->id);
             })
