@@ -14,7 +14,7 @@ class Goal extends Model
 
     protected $table = 'goals';
 
-    protected $fillabe = [
+    protected $fillable = [
         'id',
         'account_id',
         'title',
