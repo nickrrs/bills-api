@@ -12,7 +12,7 @@ class GoalDTO
 
     public $status;
 
-    public $initial_value;
+    public $actual_value;
 
     public $goal_value;
 
@@ -26,7 +26,7 @@ class GoalDTO
         $this->goal_color           = $data['goal_color'];
         $this->description          = $data['description'] ?? "";
         $this->status               = $data['status'];
-        $this->initial_value        = $data['initial_value'];
+        $this->actual_value         = $data['actual_value'];
         $this->goal_value           = $data['goal_value'];
         $this->goal_conclusion_date = $data['goal_conclusion_date'];
         $this->account_id           = "";

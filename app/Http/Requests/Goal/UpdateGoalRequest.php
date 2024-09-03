@@ -7,18 +7,18 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\{ValidationException};
 
-class StoreGoalRequest extends FormRequest
+class UpdateGoalRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-            'title'                => ['required', 'string'],
-            'goal_color'           => ['required', 'string'],
+            'title'                => ['nullable', 'string'],
+            'goal_color'           => ['nullable', 'string'],
             'description'          => ['nullable', 'string'],
-            'status'               => ['required', 'string'],
-            'actual_value'         => ['required', 'numeric'],
-            'goal_value'           => ['required', 'numeric'],
-            'goal_conclusion_date' => ['required', 'date'],
+            'status'               => ['nullable', 'string'],
+            'initial_value'        => ['nullable', 'numeric'],
+            'goal_value'           => ['nullable', 'numeric'],
+            'goal_conclusion_date' => ['nullable', 'date'],
         ];
     }
 

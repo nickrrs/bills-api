@@ -21,7 +21,7 @@ class Goal extends Model
         'goal_color',
         'description',
         'status',
-        'initial_value',
+        'actual_value',
         'goal_value',
         'goal_conclusion_date',
     ];

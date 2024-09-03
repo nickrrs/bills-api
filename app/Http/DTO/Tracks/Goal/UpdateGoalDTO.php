@@ -12,7 +12,7 @@ class UpdateGoalDTO
 
     public $status;
 
-    public $initial_value;
+    public $actual_value;
 
     public $goal_value;
 
@@ -26,7 +26,7 @@ class UpdateGoalDTO
         $this->goal_color           = $data['goal_color'] ?? $existingData['goal_color'];
         $this->description          = $data['description'] ?? $existingData['description'] ?? "";
         $this->status               = $data['status'] ?? $existingData['status'];
-        $this->initial_value        = $data['initial_value'] ?? $existingData['initial_value'];
+        $this->actual_value         = $data['actual_value'] ?? $existingData['actual_value'];
         $this->goal_value           = $data['goal_value'] ?? $existingData['goal_value'];
         $this->goal_conclusion_date = $data['goal_conclusion_date'] ?? $existingData['goal_conclusion_date'];
     }

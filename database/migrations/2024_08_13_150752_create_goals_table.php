@@ -17,7 +17,7 @@ return new class () extends Migration {
             $table->string('goal_color');
             $table->text('description')->nullable();
             $table->string('status');
-            $table->decimal('initial_value');
+            $table->decimal('actual_value');
             $table->decimal('goal_value');
             $table->timestamp('goal_conclusion_date');
             $table->timestamps();
