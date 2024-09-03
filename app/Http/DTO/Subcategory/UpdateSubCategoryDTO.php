@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Http\DTO\Subcategory;
+use App\Traits\FillableFromArray;
 
 class UpdateSubCategoryDTO
 {
+    use FillableFromArray;
+
     public $title;
 
     public $color;
@@ -12,8 +15,6 @@ class UpdateSubCategoryDTO
 
     public function __construct(array $data, $existingData = [])
     {
-        $this->title       = $data['title'] ?? $existingData['title'];
-        $this->color       = $data['color'] ?? $existingData['color'];
-        $this->category_id = $data['category_id'] ?? $existingData['category_id'];
+        $this->fillFromArray($data, $existingData);
     }
 }

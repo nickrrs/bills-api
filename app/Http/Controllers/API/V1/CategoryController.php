@@ -77,10 +77,7 @@ class CategoryController extends Controller
         try {
             $categoryDTO = new UpdateCategoryDTO(
                 $updateCategoryRequest->validated(),
-                [
-                    'title' => $category->title,
-                    'color' => $category->color,
-                ]
+                $category->toArray()
             );
 
             $updatedCategory = $this->categoryService->update($categoryDTO, $category);
