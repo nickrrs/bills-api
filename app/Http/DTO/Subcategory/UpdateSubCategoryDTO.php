@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\DTO\Subcategory;
+
 use App\Traits\FillableFromArray;
 
 class UpdateSubCategoryDTO

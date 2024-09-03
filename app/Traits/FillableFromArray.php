@@ -2,7 +2,8 @@
 
 namespace App\Traits;
 
-trait FillableFromArray {
+trait FillableFromArray
+{
     public function fillFromArray(array $data, array $existingData = []): void
     {
         foreach (get_object_vars($this) as $propertyName => $value) {

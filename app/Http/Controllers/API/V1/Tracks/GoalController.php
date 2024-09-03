@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\API\V1\Tracks;
 
 use App\Http\Controllers\Controller;
-use App\Http\DTO\Tracks\Goal\GoalDTO;
-use App\Http\DTO\Tracks\Goal\UpdateGoalDTO;
-use App\Http\Requests\Goal\StoreGoalRequest;
-use App\Http\Requests\Goal\UpdateGoalRequest;
+use App\Http\DTO\Tracks\Goal\{GoalDTO, UpdateGoalDTO};
+use App\Http\Requests\Goal\{StoreGoalRequest, UpdateGoalRequest};
 use App\Http\Resources\GoalResource;
 use App\Models\Goal;
 use App\Services\Tracks\GoalService;
@@ -50,15 +48,17 @@ class GoalController extends Controller
         }
     }
 
-    public function update(UpdateGoalRequest $updateGoalRequest, Goal $goal): GoalResource | JsonResponse {
+    public function update(UpdateGoalRequest $updateGoalRequest, Goal $goal): GoalResource | JsonResponse
+    {
         try {
-            $categoryDTO = new UpdateGoalDTO(
+            $goalDTO = new UpdateGoalDTO(
                 $updateGoalRequest->validated(),
-                [
-                    'title' => $category->title,
-                    'color' => $category->color,
-                ]
+                $goal->toArray()
             );
+
+            $goal = $this->goalService->update($goal, $goalDTO);
+
+            return new GoalResource($goal->load(['account']));
         } catch (Exception $exception) {
             Log::error('Error while updating a goal: ', ['error' => $exception->getMessage(), 'status' => $exception->getCode()]);
 

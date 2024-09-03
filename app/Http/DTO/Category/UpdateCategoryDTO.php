@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\DTO\Category;
+
 use App\Traits\FillableFromArray;
-use ReflectionClass;
 
 class UpdateCategoryDTO
 {
