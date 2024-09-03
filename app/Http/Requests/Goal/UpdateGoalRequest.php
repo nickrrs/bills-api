@@ -16,7 +16,7 @@ class UpdateGoalRequest extends FormRequest
             'goal_color'           => ['nullable', 'string'],
             'description'          => ['nullable', 'string'],
             'status'               => ['nullable', 'string'],
-            'initial_value'        => ['nullable', 'numeric'],
+            'actual_value'         => ['nullable', 'numeric'],
             'goal_value'           => ['nullable', 'numeric'],
             'goal_conclusion_date' => ['nullable', 'date'],
         ];
