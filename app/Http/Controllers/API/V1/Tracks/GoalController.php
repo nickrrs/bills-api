@@ -11,6 +11,8 @@ use App\Services\Tracks\GoalService;
 use App\Traits\ExceptionHandler;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Log;
 
 class GoalController extends Controller
@@ -20,6 +22,40 @@ class GoalController extends Controller
     public function __construct(private GoalService $goalService)
     {
 
+    }
+
+    public function index(Request $request): ResourceCollection | JsonResponse
+    {
+        try {
+            $activeAccount = $request->user()->activeAccount();
+
+            if(!filled($activeAccount)) {
+                return response()->json([
+                    'error' => [
+                        'message' => 'Please select an account.',
+                    ],
+                ]);
+            }
+
+            $goals = $this->goalService->index($activeAccount);
+
+            return GoalResource::collection($goals);
+        } catch (Exception $exception) {
+            Log::error('Error while listing goals: ', ['error' => $exception->getMessage(), 'status' => $exception->getCode()]);
+
+            return $this->handleException($exception);
+        }
+    }
+
+    public function show(Goal $goal): GoalResource | JsonResponse
+    {
+        try {
+            return new GoalResource($goal->load(['account']));
+        } catch (Exception $exception) {
+            Log::error('Error while index goal: ', ['error' => $exception->getMessage(), 'status' => $exception->getCode()]);
+
+            return $this->handleException($exception);
+        }
     }
 
     public function store(StoreGoalRequest $storeGoalRequest): GoalResource | JsonResponse

@@ -4,10 +4,11 @@ namespace App\Services;
 
 use App\Http\DTO\Category\{CategoryDTO, UpdateCategoryDTO};
 use App\Models\{Account, Category};
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class CategoryService
 {
-    public function index(Account $activeAccount)
+    public function index(Account $activeAccount): LengthAwarePaginator
     {
         return Category::query()->where('account_id', $activeAccount->id)->paginate(10);
     }
