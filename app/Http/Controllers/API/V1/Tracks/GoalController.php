@@ -38,8 +38,11 @@ class GoalController extends Controller
             }
 
             $goals = $this->goalService->index($activeAccount);
+            $closestExpiringGoal = Goal::closestExpiringGoal();
 
-            return GoalResource::collection($goals);
+            return GoalResource::collection($goals)->additional([
+                'closest_expiring_goal' => $closestExpiringGoal,
+            ]);
         } catch (Exception $exception) {
             Log::error('Error while listing goals: ', ['error' => $exception->getMessage(), 'status' => $exception->getCode()]);
 

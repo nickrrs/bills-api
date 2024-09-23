@@ -10,6 +10,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Number;
 
+/**
+ * @property int $id
+ * @property-read string $value_to_invest
+ * @property-read float $percentage
+ */
 class Goal extends Model
 {
     use HasFactory;
@@ -55,5 +60,12 @@ class Goal extends Model
                 return round($percentageAchieved, 2);
             }
         );
+    }
+
+    public static function closestExpiringGoal(): ?self
+    {
+        return self::where('goal_conclusion_date', '>', Carbon::now())
+            ->orderBy('goal_conclusion_date', 'asc')
+            ->first();
     }
 }
