@@ -24,6 +24,8 @@ class GoalResource extends JsonResource
             'actual_value'         => $this->actual_value,
             'goal_value'           => $this->goal_value,
             'goal_conclusion_date' => $this->goal_conclusion_date,
+            'value_to_invest'      => $this->value_to_invest,
+            'percentage'           => $this->percentage,
             'account'              => $this->whenLoaded('account', fn () => $this->account),
         ];
     }
