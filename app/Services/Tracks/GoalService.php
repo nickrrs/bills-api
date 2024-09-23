@@ -25,4 +25,9 @@ class GoalService
 
         return $goal;
     }
+
+    public function destroy(Goal $goal): bool
+    {
+        return $goal->delete();
+    }
 }

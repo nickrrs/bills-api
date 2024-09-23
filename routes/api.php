@@ -22,6 +22,6 @@ Route::group(['prefix' => 'v1'], function () {
         Route::resource('categories', CategoryController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
         Route::resource('categories.subcategories', SubCategoryController::class)->only('index', 'show', 'store', 'update', 'destroy');
 
-        Route::resource('goals', GoalController::class)->only(['index', 'show', 'store', 'update']);
+        Route::resource('goals', GoalController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
     });
 });

@@ -101,4 +101,29 @@ class GoalController extends Controller
             return $this->handleException($exception);
         }
     }
+
+    public function destroy(Goal $goal): JsonResponse
+    {
+        try {
+            $deleted = $this->goalService->destroy($goal);
+
+            if(!$deleted) {
+                return response()->json([
+                    'error' => [
+                        'message' => 'Error while trying deleting the goal, please try again.',
+                    ],
+                ], 409);
+            }
+
+            return response()->json([
+                'success' => [
+                    'message' => 'Goal deleted.',
+                ],
+            ]);
+        } catch (Exception $exception) {
+            Log::error('Error while deletinng goal: ', ['error' => $exception->getMessage(), 'status' => $exception->getCode()]);
+
+            return $this->handleException($exception);
+        }
+    }
 }
