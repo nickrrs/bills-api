@@ -68,4 +68,14 @@ class Goal extends Model
             ->orderBy('goal_conclusion_date', 'asc')
             ->first();
     }
+
+    public static function totalInvested(): ?string
+    {
+        return self::sum('actual_value');
+    }
+
+    public static function totalGoals(): ?string
+    {
+        return self::sum('goal_value');
+    }
 }
